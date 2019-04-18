@@ -1,4 +1,5 @@
 // This is adapted from https://bl.ocks.org/mbostock/2675ff61ea5e063ede2b5d63c08020c7
+var graph_now;
 
 var svg = d3.select("svg"),
     width = +svg.attr("width"),
@@ -14,6 +15,8 @@ var simulation = d3.forceSimulation()
 // TODO read json user uploaded
 d3.json("graph_example.json", function (error, graph) {
     if (error) throw error;
+    graph_now = {};
+    Object.assign(graph_now, graph);
 
     var link = svg.append("g")
         .attr("class", "links")
@@ -91,6 +94,18 @@ function dragended(d) {
 
 // TODO get res json from response
 function min_vertex_cover() {
+    // send graph to server
+    fetch('../vertexcover', {
+        method: 'POST',
+        headers: {
+            // 'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(graph_now)
+        }).then(function (response) {
+            console.log(response.text());
+        });
+
     d3.json('graph_example_res.json', function (e, d) {
         for (i=0; i<d.res.length; i++) {
             d3.select("#n" + d.res[i]).attr('class', 'selected');

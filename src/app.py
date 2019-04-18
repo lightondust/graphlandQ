@@ -1,6 +1,14 @@
 from flask import Flask, request
 from model import model_min_vertex_cover
 from config import static_folder
+import argparse
+
+parser = argparse.ArgumentParser(description='GraphQ')
+parser.add_argument('-d', '--debug', type=str, default='',
+                    help='enable debug url')
+
+args = parser.parse_args()
+print(args)
 
 app = Flask(__name__, static_folder=static_folder)
 
@@ -20,13 +28,14 @@ def vertex_cover():
         return str(res)
 
 
-@app.route('/debug', methods=['POST', 'GET'])
-def display():
+if args.debug:
+    @app.route('/debug', methods=['POST', 'GET'])
+    def display():
 
-    if request.method == 'POST' and request.headers['Content-Type']=='application/json':
-        return str(request.json)
+        if request.method == 'POST' and request.headers['Content-Type']=='application/json':
+            return str(request.json)
 
-    return str(request)
+        return str(request)
 
 
 app.run(port=8000)
