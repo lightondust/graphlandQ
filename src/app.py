@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from model import model_min_vertex_cover
+from service import get_model
 from config import static_folder
 import argparse
 
@@ -15,27 +15,26 @@ app = Flask(__name__, static_folder=static_folder)
 
 @app.route('/file/<path:path>')
 def static_proxy(path):
-    print(path)
-
     return app.send_static_file(path)
 
 
-@app.route('/vertexcover', methods=['POST'])
-def vertex_cover():
-    if request.method == 'POST' and request.headers['Content-Type'] == 'application/json':
-        res = model_min_vertex_cover(request.json)
-        resp = {
-            'result': res
-        }
+@app.route('/calculate', methods=['POST'])
+def cal():
+    request_dict = request.json
+    model = get_model(request_dict['algorithm'])
+    res = model(request_dict['graph'])
+    resp = {
+        'result': res
+    }
 
-        return jsonify(resp)
+    return jsonify(resp)
 
 
 if args.debug:
     @app.route('/debug', methods=['POST', 'GET'])
     def display():
 
-        if request.method == 'POST' and request.headers['Content-Type']=='application/json':
+        if request.method == 'POST' and request.headers['Content-Type'] == 'application/json':
             return str(request.json)
 
         return str(request)

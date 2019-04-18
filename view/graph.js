@@ -1,5 +1,8 @@
-// This is adapted from https://bl.ocks.org/mbostock/2675ff61ea5e063ede2b5d63c08020c7
+// s.z
+// customized from https://bl.ocks.org/mbostock/2675ff61ea5e063ede2b5d63c08020c7
 var graph_now;
+const CAL_URL = '../calculate';
+var graph_url = 'graph_example.json';
 
 var svg = d3.select("svg"),
     width = +svg.attr("width"),
@@ -13,7 +16,6 @@ var simulation = d3.forceSimulation()
     .force("center", d3.forceCenter(width / 2, height / 2));
 
 // TODO read json user uploaded
-graph_url = 'graph_example.json'
 d3.json(graph_url, function(error, g){
     if (error) throw error;
     graph_now = g;
@@ -104,13 +106,17 @@ function show_result(result) {
 
 function min_vertex_cover() {
     // send graph to server
-    fetch('../vertexcover', {
+    fetch(CAL_URL, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(graph_now)
+        body: JSON.stringify({
+            'algorithm' :'min_vertex_cover',
+            'solver': 'exact',
+            'graph': graph_now
+        })
     }).then(function (response) {
         return response.text();
     }).then(function(text){

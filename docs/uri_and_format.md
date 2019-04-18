@@ -1,11 +1,24 @@
+# URI
 - /files/*   
 static files
 
 - /cal  
 calculate graphs
 
-- json  
+# JSON format
+
+- request json  
+
+```
 {
-'algorithm': algorithm to use,
-'graph': graph json
+    'algorithm': algorithm to use,
+    'graph': graph json
 }
+```
+
+- response json  
+```
+{
+    'result': result nodes
+}
+```
