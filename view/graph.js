@@ -13,10 +13,14 @@ var simulation = d3.forceSimulation()
     .force("center", d3.forceCenter(width / 2, height / 2));
 
 // TODO read json user uploaded
-d3.json("graph_example.json", function (error, graph) {
+graph_url = 'graph_example.json'
+d3.json(graph_url, function(error, g){
     if (error) throw error;
-    graph_now = {};
-    Object.assign(graph_now, graph);
+    graph_now = g;
+});
+
+d3.json(graph_url, function (error, graph) {
+    if (error) throw error;
 
     var link = svg.append("g")
         .attr("class", "links")
@@ -92,23 +96,25 @@ function dragended(d) {
     d.fy = null;
 }
 
-// TODO get res json from response
+function show_result(result) {
+    for (i=0; i<result.length; i++) {
+        d3.select("#n" + result[i]).attr('class', 'selected');
+    }
+}
+
 function min_vertex_cover() {
     // send graph to server
     fetch('../vertexcover', {
         method: 'POST',
         headers: {
-            // 'Accept': 'application/json',
+            'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(graph_now)
-        }).then(function (response) {
-            console.log(response.text());
-        });
-
-    d3.json('graph_example_res.json', function (e, d) {
-        for (i=0; i<d.res.length; i++) {
-            d3.select("#n" + d.res[i]).attr('class', 'selected');
-        }
+    }).then(function (response) {
+        return response.text();
+    }).then(function(text){
+        show_result(JSON.parse(text).result)
     });
+
 }

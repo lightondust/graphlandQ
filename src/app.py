@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from model import model_min_vertex_cover
 from config import static_folder
 import argparse
@@ -24,8 +24,11 @@ def static_proxy(path):
 def vertex_cover():
     if request.method == 'POST' and request.headers['Content-Type'] == 'application/json':
         res = model_min_vertex_cover(request.json)
+        resp = {
+            'result': res
+        }
 
-        return str(res)
+        return jsonify(resp)
 
 
 if args.debug:
