@@ -1,6 +1,6 @@
-from flask import Flask, request, jsonify
-from service import get_model
-from config import static_folder
+from flask import Flask, request, jsonify, redirect
+from utils.model_utils import get_model
+from config import static_folder, port
 import argparse
 
 parser = argparse.ArgumentParser(description='GraphQ')
@@ -12,17 +12,23 @@ print(args)
 
 app = Flask(__name__, static_folder=static_folder)
 
+@app.route('/')
+def index():
+    return redirect('/file/main.html')
 
+
+# return static files
 @app.route('/file/<path:path>')
 def static_proxy(path):
     return app.send_static_file(path)
 
 
+# run algorithms
 @app.route('/calculate', methods=['POST'])
-def cal():
+def calculate():
     request_dict = request.json
     model = get_model(request_dict['algorithm'])
-    res = model(request_dict['graph'])
+    res = model(request_dict['graph'], sampler_name=request_dict['sampler'])
     resp = {
         'result': res
     }
@@ -40,4 +46,4 @@ if args.debug:
         return str(request)
 
 
-app.run(port=8000)
+app.run(port=port)

@@ -1,14 +1,26 @@
 // s.z
 // customized from https://bl.ocks.org/mbostock/2675ff61ea5e063ede2b5d63c08020c7
-var graph_now;
-const CAL_URL = '../calculate';
-var graph_url = 'graph_example.json';
 
-var svg = d3.select("svg"),
+let graph_now;
+const CAL_URL = '../calculate';
+let graph_url = './contents/graph_example.json';
+let sampler = 'exact';
+let algorithm = 'min_vertex_cover';
+
+function get_algorithm(){
+    algorithm = document.getElementById('algorithm').value;
+}
+
+function get_sample(){
+    sampler = document.getElementById('sampler').value;
+    sampler.replace('"', '');
+}
+
+let svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height");
 
-var simulation = d3.forceSimulation()
+let simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function (d) {
         return d.id;
     }))
@@ -104,7 +116,12 @@ function show_result(result) {
     }
 }
 
-function min_vertex_cover() {
+function clear_result() {
+    d3.selectAll(".selected").attr('class', '');
+}
+
+function calculate() {
+    clear_result();
     // send graph to server
     fetch(CAL_URL, {
         method: 'POST',
@@ -113,8 +130,8 @@ function min_vertex_cover() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            'algorithm' :'min_vertex_cover',
-            'solver': 'exact',
+            'algorithm' :algorithm,
+            'sampler': sampler,
             'graph': graph_now
         })
     }).then(function (response) {

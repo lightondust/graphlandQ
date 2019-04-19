@@ -17,3 +17,11 @@
     stroke: #9ecae1;
     stroke-width: .5px;
 }
+
+.button_area{
+    margin-top: 10px;
+}
+
+.options li{
+    margin-top: 5px;
+}

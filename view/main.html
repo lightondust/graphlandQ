@@ -1,13 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Force-Directed Layout</title>
+    <title>Graphland with quantum computer</title>
     <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
     <link type="text/css" rel="stylesheet" href="graph.css"/>
     <link rel="shortcut icon" href="./favicon.ico">
   </head>
   <body>
-    <button onclick="min_vertex_cover()">minimal cover</button>
+  <h1>Graphland with quantum computer</h1>
+  <ul class="options">
+      <li>algorithm:
+        <select name="algorithm" id="algorithm" onchange="get_algorithm()">
+            <option value="min_vertex_cover">min vertex cover</option>
+        </select>
+      </li>
+      <li>sampler:
+        <select name="sampler" id="sampler" onchange="get_sample()">
+            <option value="exact">exact</option>
+            <option value="dwave">dwave</option>
+        </select>
+      </li>
+   </ul>
+    <div class="button_area">
+        <button onclick="calculate()">run</button>
+    </div>
     <svg width="960" height="600"></svg>
     <script type="text/javascript" src="graph.js"></script>
   </body>

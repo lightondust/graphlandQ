@@ -1,5 +1,9 @@
-- install
+# install
 
-- start apps
+# start apps
 
-`python src/app.py`
+```cd src```
+
+```python src/app.py```
+
+access to `localhost:8009`
