@@ -4,7 +4,7 @@ import networkx as nx
 
 
 def min_vertex_cover(graph, sampler_name):
-    print('called: min vertex cover')
+    print('called: min vertex cover. sampler: {}'.format(sampler_name))
     sampler = get_samplers(sampler_name)
     res = dnx.min_vertex_cover(nx.node_link_graph(graph), sampler)
     return res

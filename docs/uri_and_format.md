@@ -1,8 +1,11 @@
 # URI
+- /  
+redirect to main page(/files/main.html)
+
 - /files/*   
 static files
 
-- /cal  
+- /calculate  
 calculate graphs
 
 # JSON format
@@ -12,6 +15,7 @@ calculate graphs
 ```
 {
     'algorithm': algorithm to use,
+    'sampler': sampler to use,
     'graph': graph json
 }
 ```

@@ -3,7 +3,7 @@ from utils.model_utils import get_model
 from config import static_folder, port
 import argparse
 
-parser = argparse.ArgumentParser(description='GraphQ')
+parser = argparse.ArgumentParser(description='Graphland with quantum computer')
 parser.add_argument('-d', '--debug', type=str, default='',
                     help='enable debug url')
 
