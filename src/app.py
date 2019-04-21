@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify, redirect
-from utils.model_utils import get_model
+from utils.model_utils import get_model, model_map
+from utils.sampler_utils import get_sampler
 from config import static_folder, port
 import argparse
+import networkx as nx
 
 parser = argparse.ArgumentParser(description='Graphland with quantum computer')
 parser.add_argument('-d', '--debug', type=str, default='',
@@ -28,12 +30,23 @@ def static_proxy(path):
 def calculate():
     request_dict = request.json
     model = get_model(request_dict['algorithm'])
-    res = model(request_dict['graph'], sampler_name=request_dict['sampler'])
+    sampler = get_sampler(request_dict['sampler'])
+    graph = nx.node_link_graph(request_dict['graph'])
+    res, type = model(graph, sampler=sampler)
+
     resp = {
+        'type': type,
         'result': res
     }
 
     return jsonify(resp)
+
+
+# return model list
+@app.route('/models', methods=['GET'])
+def models():
+    model_list = list(model_map.keys())
+    return jsonify(model_list)
 
 
 if args.debug:

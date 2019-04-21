@@ -40,7 +40,10 @@ d3.json(graph_url, function (error, graph) {
         .attr("class", "links")
         .selectAll("line")
         .data(graph.links)
-        .enter().append("line");
+        .enter().append("line")
+        .attr('id', function(d){
+            return 'l' + d.source + d.target;
+        });
 
     var node = svg.append("g")
         .attr("class", "nodes")
@@ -49,7 +52,7 @@ d3.json(graph_url, function (error, graph) {
         .enter().append("circle")
         .attr("r", 5)
         .attr('id', function(d){
-            return "n"+d.id;
+            return "n" + d.id;
         })
         .call(d3.drag()
             .on("start", dragstarted)

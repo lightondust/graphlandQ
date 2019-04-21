@@ -20,9 +20,11 @@ calculate graphs
 }
 ```
 
+
 - response json  
 ```
 {
+    'type' : result type,
     'result': result nodes
 }
 ```

@@ -4,7 +4,7 @@ from dwave.system.composites import EmbeddingComposite
 import json
 
 
-def get_samplers(sampler_name):
+def get_sampler(sampler_name):
     import os
     print(os.getcwd())
 
