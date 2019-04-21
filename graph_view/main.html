@@ -22,12 +22,18 @@
             <option value="dwave">dwave</option>
         </select>
       </li>
-   </ul>
+      <li>graph:
+        <select name="graph" id="graph" onchange="get_graph()">
+            <option value="barbell">barbell</option>
+            <option value="karateclub">karate club</option>
+        </select>
+      </li>
+    </ul>
     <div class="button_area">
         <button onclick="calculate()">run</button>
         <button onclick="clear_result()">clear</button>
     </div>
-    <svg width="960" height="600"></svg>
+    <svg width="960" height="600" id="graph_view"></svg>
     <script type="text/javascript" src="graph.js"></script>
   </body>
 </html>
