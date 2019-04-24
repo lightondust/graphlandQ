@@ -1,12 +1,13 @@
-// s.z
-// customized from https://bl.ocks.org/mbostock/2675ff61ea5e063ede2b5d63c08020c7
-
-let graph_now;
-const CAL_URL = '../calculate';
-let graph_url_base = './graphs/';
+const SERVER_URL = '../';
+const CAL_URL = SERVER_URL + 'calculate';
+const MODEL_LIST_URL = SERVER_URL + 'models';
+const GRAPH_URL_BASE = './graphs/';
+const GRAPH_LIST_URL = GRAPH_URL_BASE + '/list.json';
 let sampler = 'exact';
 let algorithm = 'min_vertex_cover';
 let graph_name = 'barbell';
+let graph_list;
+let graph_now;
 
 function get_algorithm(){
     algorithm = document.getElementById('algorithm').value;
@@ -18,11 +19,35 @@ function get_sample(){
 
 function get_graph(){
     graph_name = document.getElementById('graph').value;
-    update_graph()
+    update_graph();
 }
 
+// get model list
+d3.json(MODEL_LIST_URL, function (error, data) {
+    model_list = data;
+    select_tag = document.getElementById('algorithm');
+    for(i=0; i<model_list.length; i++){
+        let option_tag = document.createElement('option');
+        option_tag.value = model_list[i];
+        option_tag.text = model_list[i];
+        select_tag.appendChild(option_tag);
+    }
+});
+
+// get graph list
+d3.json(GRAPH_LIST_URL, function(error, data){
+    graph_list = data['graph_names'];
+    select_tag = document.getElementById('graph');
+    for(i=0; i<graph_list.length; i++){
+        let option_tag = document.createElement('option');
+        option_tag.value = graph_list[i];
+        option_tag.text = graph_list[i];
+        select_tag.appendChild(option_tag);
+    }
+});
+
 function update_graph(){
-    let graph_url = graph_url_base + graph_name + '.json';
+    let graph_url = GRAPH_URL_BASE + graph_name + '.json';
     graph_svg = document.getElementById("graph_view");
     if(graph_svg !== null){
         graph_svg.innerHTML = "";
