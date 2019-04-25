@@ -34,8 +34,6 @@ The new file will be ignored by git due to `.gitignore`.
 
 access to [localhost:8009](http://localhost:8009)
 
-# develop
-
 ### how to add new algorithm
 1. implement a new class in `graph_computing/models/**.py` 
 1. add the function to `model_map` in `graph_computing/utils/model_utils.py`
@@ -44,6 +42,8 @@ access to [localhost:8009](http://localhost:8009)
 1. create a `{graph name}.json`(see `utils.make_graph_json.py`) to `graph_view/graphs/`
 2. add the `{graph name}` in `graph_view/graphs/list.json`
 
-## TODO
-1. display links as results
-1. add a maximum value to the exact solver, so a request would not crush the server
+# Develops
+Welcome. 
+See the issues for what we need help.
+If
+Please add an issue first.
