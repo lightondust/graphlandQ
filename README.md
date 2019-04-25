@@ -1,7 +1,20 @@
 # install and setup
 
-If you want to use dwave solver, regist an account at [D-Wave Leap](https://cloud.dwavesys.com/leap/) and set your `token`, `endpoint`, `solver` in `graph_computing/regist_info.json` 
-(beware to keep the token secret. To prevent an accident, you can make a new file `regist_info_.json` and change the value of `regist_info_path` to `regist_info_.json` in `config.py`. The new file will be ignored by git due to `.gitignore`.)
+### install
+
+clone this repository and run.
+
+`pip install -r requirments.txt`
+
+- We use python3.6.7
+- Use Flask and dwave-ocean-sdk
+
+### use dwave(optional)
+Regist an account at [D-Wave Leap](https://cloud.dwavesys.com/leap/) and set your `token`, `endpoint`, `solver` in `graph_computing/regist_info.json` 
+
+Please keep your token secret. 
+To prevent an accident, you can make a new file `regist_info_.json` and change the value of `regist_info_path` to `regist_info_.json` in `config.py`. 
+The new file will be ignored by git due to `.gitignore`.
 
 # start apps
 
@@ -13,11 +26,11 @@ access to [localhost:8009](http://localhost:8009)
 
 # develop
 
-## how to add a new algorithm
+### how to add new algorithm
 1. implement a new class in `graph_computing/models/**.py` 
 1. add the function to `model_map` in `graph_computing/utils/model_utils.py`
 
-## how to add a new graph
+### how to add new graph
 1. create a `{graph name}.json`(see `utils.make_graph_json.py`) to `graph_view/graphs/`
 2. add the `{graph name}` in `graph_view/graphs/list.json`
 
