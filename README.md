@@ -1,3 +1,13 @@
+# What's
+
+This is a simple apps to see the effect of quantum computer.
+
+- A graph:
+![Screenshot from 2019-04-25 15-01-58](https://user-images.githubusercontent.com/30369038/56713048-92965c80-676b-11e9-9202-4cc7ae3b1b9e.png)
+
+- Click Run:
+![Screenshot from 2019-04-25 15-02-11](https://user-images.githubusercontent.com/30369038/56713078-ab067700-676b-11e9-9c67-48f56bfdaf20.png)
+
 # install and setup
 
 ### install
