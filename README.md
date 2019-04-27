@@ -16,7 +16,7 @@ clone this repository and run.
 
 `pip install -r requirments.txt`
 
-- We use python3.6.7
+- We use python3.6.7, ubuntu 18.04.2 LTS (Bionic Beaver)
 - Use Flask and dwave-ocean-sdk
 
 ### use dwave(optional)
