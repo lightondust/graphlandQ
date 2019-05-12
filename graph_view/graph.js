@@ -182,4 +182,4 @@ function calculate() {
 
 }
 
-update_graph()
+update_graph();

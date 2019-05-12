@@ -26,3 +26,7 @@
 .options li{
     margin-top: 5px;
 }
+
+#graph_view_block{
+    text-align: center;
+}
