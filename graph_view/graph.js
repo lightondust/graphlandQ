@@ -150,9 +150,29 @@ function update_graph(){
     }
 }
 
-function show_result(result) {
-    for (i=0; i<result.length; i++) {
-        d3.select("#n" + result[i]).attr('class', 'selected');
+function show_alert(message){
+    doc_ob = document.getElementById('alert');
+    doc_ob.style.display = 'block';
+    doc_ob.innerText = message;
+}
+
+function hide_alert() {
+    doc_ob = document.getElementById('alert');
+    doc_ob.style.display = 'none';
+    doc_ob.innerText = '';
+}
+
+function show_result(res) {
+    res_type = res['type'];
+    if(res_type === 'node') {
+        hide_alert();
+        node_list = res['result'];
+        for (i = 0; i < node_list.length; i++) {
+            d3.select("#n" + node_list[i]).attr('class', 'selected');
+        }
+    } else if(res_type === 'alert'){
+        message = res['result'];
+        show_alert(message);
     }
 }
 
@@ -177,7 +197,7 @@ function calculate() {
     }).then(function (response) {
         return response.text();
     }).then(function(text){
-        show_result(JSON.parse(text).result)
+        show_result(JSON.parse(text));
     });
 
 }

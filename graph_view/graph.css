@@ -30,3 +30,9 @@
 #graph_view_block{
     text-align: center;
 }
+
+.alert{
+    font-size: 50px;
+    color: red;
+    display: none;
+}

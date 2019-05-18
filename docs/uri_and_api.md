@@ -31,6 +31,8 @@ calculation on graphs
 }
 ```
 
+`type` values: 'node', 'edge', 'alert'
+
 ### model infos
 
 get model list

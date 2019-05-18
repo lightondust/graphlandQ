@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, redirect
 from utils.model_utils import get_model, model_map
 from utils.sampler_utils import get_sampler
-from config import static_folder, port
+from config import STATIC_FOLDER, PORT
 import argparse
 import networkx as nx
 
@@ -12,7 +12,7 @@ parser.add_argument('-d', '--debug', type=str, default='',
 args = parser.parse_args()
 print(args)
 
-app = Flask(__name__, static_folder=static_folder)
+app = Flask(__name__, static_folder=STATIC_FOLDER)
 
 @app.route('/')
 def index():
@@ -29,13 +29,18 @@ def static_proxy(path):
 @app.route('/calculate', methods=['POST'])
 def calculate():
     request_dict = request.json
-    model = get_model(request_dict['algorithm'])
-    sampler = get_sampler(request_dict['sampler'])
     graph = nx.node_link_graph(request_dict['graph'])
-    res, type = model(graph, sampler=sampler)
+    sampler = get_sampler(request_dict['sampler'], graph)
+
+    if type(sampler) == str:
+        res_type = 'alert'
+        res = sampler
+    else:
+        model = get_model(request_dict['algorithm'])
+        res, res_type = model(graph, sampler=sampler)
 
     resp = {
-        'type': type,
+        'type': res_type,
         'result': res
     }
 
@@ -59,4 +64,4 @@ if args.debug:
         return str(request)
 
 
-app.run(port=port)
+app.run(port=PORT)
