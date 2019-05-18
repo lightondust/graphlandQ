@@ -2,11 +2,11 @@
 
 This is a simple app to see the effect of quantum computer.
 
-- A graph:
-![Screenshot from 2019-04-25 15-01-58](https://user-images.githubusercontent.com/30369038/56713048-92965c80-676b-11e9-9202-4cc7ae3b1b9e.png)
+- select a graph, a solver, a algorithm:
+![Screenshot from 2019-05-13 00-37-11](https://user-images.githubusercontent.com/30369038/57584528-835b3100-7517-11e9-9ab7-4c3b00281bf6.png)
 
-- Click Run:
-![Screenshot from 2019-04-25 15-02-11](https://user-images.githubusercontent.com/30369038/56713078-ab067700-676b-11e9-9c67-48f56bfdaf20.png)
+- Click Run(this example finds nodes corresponds to a set of influencer):
+![Screenshot from 2019-05-13 00-37-55](https://user-images.githubusercontent.com/30369038/57584530-85bd8b00-7517-11e9-8071-2c1a01c182ce.png)
 
 # install and setup
 
