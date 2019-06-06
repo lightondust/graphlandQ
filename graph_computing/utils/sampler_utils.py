@@ -1,4 +1,5 @@
 from dimod.reference.samplers import ExactSolver
+from neal import SimulatedAnnealingSampler
 from dwave.system.samplers import DWaveSampler
 from dwave.system.composites import EmbeddingComposite
 import json
@@ -29,6 +30,9 @@ def get_sampler(sampler_name, graph):
             sampler = ExactSolver()
         else:
             return TOO_MANY_NODES
+
+    elif sampler_name == 'simulated annealing':
+        return SimulatedAnnealingSampler()
 
     elif sampler_name == 'dwave':
         if DWAVE_ALLOWED:

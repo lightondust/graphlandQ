@@ -64,4 +64,4 @@ if args.debug:
         return str(request)
 
 
-app.run(port=PORT)
+app.run(port=PORT, host='0.0.0.0')

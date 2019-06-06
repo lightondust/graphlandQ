@@ -1,6 +1,6 @@
 STATIC_FOLDER = '../graph_view'
 PORT = 8009
-REGIST_INFO_PATH = './regist_info_.json'
+REGIST_INFO_PATH = './regist_info.json'
 MAX_NODES_NUMBER = 21
 DWAVE_ALLOWED = True
 
