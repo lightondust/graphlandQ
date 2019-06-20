@@ -19,7 +19,8 @@ calculation on graphs
 {
     'algorithm': algorithm to use,
     'sampler': sampler to use,
-    'graph': graph json
+    'graph': graph json,
+    'params': parameter
 }
 ```
 

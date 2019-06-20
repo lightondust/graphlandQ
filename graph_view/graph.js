@@ -2,17 +2,23 @@ const SERVER_URL = '../';
 const CAL_URL = SERVER_URL + 'calculate';
 const MODEL_LIST_URL = SERVER_URL + 'models';
 const GRAPH_URL_BASE = './graphs/';
-const GRAPH_LIST_URL = GRAPH_URL_BASE + '/list.json';
+const GRAPH_LIST_URL = GRAPH_URL_BASE + 'list.json';
+const MODELS_NEED_PARAMS = ['influencer_set'];
 let sampler;
-let algorithm = 'min_vertex_cover';
-let graph_name = 'barbell';
+let algorithm;
+let graph_name;
 let graph_list;
 let graph_now;
 let params = 5.0;
 
 function get_algorithm(){
     algorithm = document.getElementById('algorithm').value;
-    update_params_from_slider();
+    if(MODELS_NEED_PARAMS.includes(algorithm)){
+        undisable_params();
+        update_params_from_slider();
+    } else{
+        disable_params();
+    }
 }
 
 function get_sampler(){
@@ -36,32 +42,15 @@ function update_params_from_input(){
     return params;
 }
 
-get_sampler();
+function disable_params(){
+    document.getElementById('params_slider').disabled = true;
+    document.getElementById('params_input').disabled = true;
+}
 
-// get algorithm list
-d3.json(MODEL_LIST_URL, function (error, data) {
-    model_list = data;
-    select_tag = document.getElementById('algorithm');
-    for(i=0; i<model_list.length; i++){
-        let option_tag = document.createElement('option');
-        option_tag.value = model_list[i];
-        option_tag.text = model_list[i];
-        select_tag.appendChild(option_tag);
-    }
-    get_algorithm();
-});
-
-// get graph list
-d3.json(GRAPH_LIST_URL, function(error, data){
-    graph_list = data['graph_names'];
-    select_tag = document.getElementById('graph');
-    for(i=0; i<graph_list.length; i++){
-        let option_tag = document.createElement('option');
-        option_tag.value = graph_list[i];
-        option_tag.text = graph_list[i];
-        select_tag.appendChild(option_tag);
-    }
-});
+function undisable_params(){
+    document.getElementById('params_slider').disabled = false;
+    document.getElementById('params_input').disabled = false;
+}
 
 function update_graph(){
     let graph_url = GRAPH_URL_BASE + graph_name + '.json';
@@ -220,4 +209,33 @@ function calculate() {
 
 }
 
-update_graph();
+get_sampler();
+
+// get algorithm list
+d3.json(MODEL_LIST_URL, function (error, data) {
+    model_list = data;
+    select_tag = document.getElementById('algorithm');
+    for(i=0; i<model_list.length; i++){
+        let option_tag = document.createElement('option');
+        option_tag.value = model_list[i];
+        option_tag.text = model_list[i];
+        select_tag.appendChild(option_tag);
+    }
+    document.getElementById('algorithm').value = model_list[0];
+    get_algorithm();
+});
+
+// get graph list
+d3.json(GRAPH_LIST_URL, function(error, data){
+    graph_list = data['graph_names'];
+    select_tag = document.getElementById('graph');
+    for(i=0; i<graph_list.length; i++){
+        let option_tag = document.createElement('option');
+        option_tag.value = graph_list[i];
+        option_tag.text = graph_list[i];
+        select_tag.appendChild(option_tag);
+    }
+    document.getElementById('graph').value = graph_list[0];
+    graph_name = graph_list[0];
+    update_graph();
+});
