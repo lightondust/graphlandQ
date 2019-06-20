@@ -3,17 +3,19 @@ const CAL_URL = SERVER_URL + 'calculate';
 const MODEL_LIST_URL = SERVER_URL + 'models';
 const GRAPH_URL_BASE = './graphs/';
 const GRAPH_LIST_URL = GRAPH_URL_BASE + '/list.json';
-let sampler = 'exact';
+let sampler;
 let algorithm = 'min_vertex_cover';
 let graph_name = 'barbell';
 let graph_list;
 let graph_now;
+let params = 5.0;
 
 function get_algorithm(){
     algorithm = document.getElementById('algorithm').value;
+    update_params_from_slider();
 }
 
-function get_sample(){
+function get_sampler(){
     sampler = document.getElementById('sampler').value;
 }
 
@@ -22,7 +24,21 @@ function get_graph(){
     update_graph();
 }
 
-// get model list
+function update_params_from_slider(){
+    params = document.getElementById('params_slider').value;
+    document.getElementById('params_input').value = params;
+    return params;
+}
+
+function update_params_from_input(){
+    params = document.getElementById('params_input').value;
+    document.getElementById('params_slider').value = params;
+    return params;
+}
+
+get_sampler();
+
+// get algorithm list
 d3.json(MODEL_LIST_URL, function (error, data) {
     model_list = data;
     select_tag = document.getElementById('algorithm');
@@ -32,6 +48,7 @@ d3.json(MODEL_LIST_URL, function (error, data) {
         option_tag.text = model_list[i];
         select_tag.appendChild(option_tag);
     }
+    get_algorithm();
 });
 
 // get graph list
@@ -192,7 +209,8 @@ function calculate() {
         body: JSON.stringify({
             'algorithm' :algorithm,
             'sampler': sampler,
-            'graph': graph_now
+            'graph': graph_now,
+            'params': params
         })
     }).then(function (response) {
         return response.text();

@@ -1,6 +1,7 @@
-def influencer_set(graph, sampler):
-    res = _influencer_set(graph, sampler)
+def influencer_set(graph, sampler, params=5.0):
+    res = _influencer_set(graph, sampler, l=float(params))
     return list(res), 'node'
+
 
 def _influencer_set(G, sampler=None, l=5.0, **sampler_args):
     """Returns a set of influencers which is an approximate maximum cut with

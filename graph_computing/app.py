@@ -37,7 +37,7 @@ def calculate():
         res = sampler
     else:
         model = get_model(request_dict['algorithm'])
-        res, res_type = model(graph, sampler=sampler)
+        res, res_type = model(graph, sampler=sampler, params=request_dict['params'])
 
     resp = {
         'type': res_type,
