@@ -3,7 +3,7 @@ const CAL_URL = SERVER_URL + 'calculate';
 const MODEL_LIST_URL = SERVER_URL + 'models';
 const GRAPH_URL_BASE = './graphs/';
 const GRAPH_LIST_URL = GRAPH_URL_BASE + 'list.json';
-const MODELS_NEED_PARAMS = ['influencer_set'];
+const MODELS_NEED_PARAMS = ['influencer_set', 'graph_partition'];
 let sampler;
 let algorithm;
 let graph_name;

@@ -1,15 +1,15 @@
-from config import INFLUENCER_SET_SCALE
+from config import GRAPH_PARTITION_SCALE
 
 
-def influencer_set(graph, sampler, params=5.0):
-    res = _influencer_set(graph, sampler, l=float(params)/INFLUENCER_SET_SCALE)
+def graph_partition(graph, sampler, params=5.0):
+    res = _graph_partition(graph, sampler, l=float(params)/GRAPH_PARTITION_SCALE)
     return list(res), 'node'
 
 
-def _influencer_set(G, sampler=None, l=5.0, **sampler_args):
+def _graph_partition(G, sampler=None, l=5.0, **sampler_args):
     """
-    Returns a set of influencers which is an approximate maximum cut with
-    loss term on number of nodes
+    Ising model corresponds to
+    l (/sum_{nodes} q_i)^2 - /sum_{edges} q_i q_j
 
     Parameters
     ----------
@@ -43,7 +43,7 @@ def _influencer_set(G, sampler=None, l=5.0, **sampler_args):
     >>> import dimod
     >>> samplerSA = dimod.SimulatedAnnealingSampler()
     >>> G = dnx.chimera_graph(1, 1, 4)
-    >>> cut = influencer_set(G, samplerSA)
+    >>> cut = graph_partition(G, samplerSA)
 
     Notes
     -----
@@ -51,11 +51,15 @@ def _influencer_set(G, sampler=None, l=5.0, **sampler_args):
     function does not attempt to confirm the quality of the returned
     sample.
     """
-    # In order to form the Ising problem, we want to increase the
-    # energy by 1 for each edge between two nodes of the same color.
-    # The linear biases can all be 0.
-    h = {v: l for v in G}
-    J = {(u, v): 1 for u, v in G.edges}
+    nodes = [v for v in G]
+    h = {v: 2*l for v in nodes}
+    J = {}
+    for idx, v in enumerate(nodes):
+        for u in nodes[:idx]:
+            J[(v, u)] = l
+
+    for u, v in G.edges:
+        J[(u, v)] = -1+l
 
     # draw the lowest energy sample from the sampler
     response = sampler.sample_ising(h, J, **sampler_args)
