@@ -12,7 +12,7 @@ This is a simple app to see the effect of quantum computer.
 
 ### install
 
-clone this repository and run.
+[make an env](https://docs.python.org/3.6/tutorial/venv.html) for this project, clone this repository and run.
 
 `pip install -r requirements.txt`
 
