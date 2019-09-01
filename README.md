@@ -14,7 +14,7 @@ This is a simple app to see the effect of quantum computer.
 
 clone this repository and run.
 
-`pip install -r requirments.txt`
+`pip install -r requirements.txt`
 
 - We use python3.6.7, ubuntu 18.04.2 LTS (Bionic Beaver)
 - Use Flask and dwave-ocean-sdk
