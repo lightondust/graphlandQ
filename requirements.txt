@@ -28,7 +28,7 @@ penaltymodel-cache==0.4.0
 penaltymodel-mip==0.2.1
 pkg-resources==0.0.0
 plucky==0.4.3
-protobuf==3.7.1
+protobuf==3.18.3
 PySocks==1.6.8
 python-dateutil==2.8.0
 requests==2.21.0
